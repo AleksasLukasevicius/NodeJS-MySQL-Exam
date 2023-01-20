@@ -1,11 +1,14 @@
 import express from "express";
 import cors from "cors";
 import { SERVER_PORT } from "./config.js";
+import { registerUser } from "./routes/v1/authorization.js";
 
 const app = express();
 
 app.use(cors());
 app.use(express.json());
+
+app.post("/v1/authorization/register", registerUser);
 
 app.get("/", (_, res) => {
   res.send({ message: "Server is running" });
