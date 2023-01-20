@@ -6,13 +6,15 @@ import { jwtSecret } from "../../config.js";
 import jwt from "jsonwebtoken";
 
 const userSchema = Joi.object({
-  fullName: Joi.string().trim().required(),
+  full_name: Joi.string().trim().required(),
   email: Joi.string().email().trim().lowercase().required(),
   password: Joi.string().required(),
 });
 
 export const registerUser = async (req, res) => {
   let userData = req.body;
+
+  console.info(userData.full_name);
   try {
     userData = await userSchema.validateAsync(userData);
   } catch (error) {
@@ -22,14 +24,14 @@ export const registerUser = async (req, res) => {
   try {
     const hashedPassword = bcrypt.hashSync(userData.password);
 
-    const con = await mysql.createConnection(MYSQL_CONFIG);
-    await con.execute(
-      `INSERT INTO users (email, password) VALUES (${mysql.escape(
-        userData.email
-      )}, '${hashedPassword}')`
+    const connection = await mysql.createConnection(MYSQL_CONFIG);
+    await connection.execute(
+      `INSERT INTO users (full_name, email, password) VALUES (${mysql.escape(
+        userData.full_name
+      )},${mysql.escape(userData.email)}, '${hashedPassword}')`
     );
 
-    await con.end();
+    await connection.end();
 
     return res.status(200).send("User registered successfully").end(); // res.send(data)
   } catch (error) {

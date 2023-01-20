@@ -21,13 +21,16 @@ registerForm.addEventListener("submit", async (event) => {
         method: "POST",
         headers: { "Content-Type": "application/json; charset=UTF-8" },
         body: JSON.stringify({
-          fullName: userFullNamelInputValue,
+          full_name: userFullNamelInputValue,
           email: emailInputValue,
           password: passwordInputValue,
           // reapetPassword: reapetPasswordInputValue,
         }),
       }
     );
+
+    console.info(password);
+    console.info(reapetPassword);
 
     // if (password !== reapetPassword) {
     //   return alert({ message: "Passwords do not match" });
