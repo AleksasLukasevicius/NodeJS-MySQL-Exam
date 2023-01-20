@@ -10,9 +10,9 @@ registerForm.addEventListener("submit", async (event) => {
   const passwordInputValue = document
     .querySelector("#password-input")
     .value.trim();
-  // const reapetPasswordInputValue = document
-  //   .querySelector("#reapet-password-input")
-  //   .value.trim();
+  const reapetPasswordInputValue = document
+    .querySelector("#reapet-password-input")
+    .value.trim();
 
   try {
     const response = await fetch(
@@ -21,20 +21,13 @@ registerForm.addEventListener("submit", async (event) => {
         method: "POST",
         headers: { "Content-Type": "application/json; charset=UTF-8" },
         body: JSON.stringify({
-          full_name: userFullNamelInputValue,
+          fullName: userFullNamelInputValue,
           email: emailInputValue,
           password: passwordInputValue,
-          // reapetPassword: reapetPasswordInputValue,
+          reapetPassword: reapetPasswordInputValue,
         }),
       }
     );
-
-    console.info(password);
-    console.info(reapetPassword);
-
-    // if (password !== reapetPassword) {
-    //   return alert({ message: "Passwords do not match" });
-    // }
 
     if (response.ok) {
       registerForm.reset();

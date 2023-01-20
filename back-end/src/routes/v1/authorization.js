@@ -6,15 +6,23 @@ import { jwtSecret } from "../../config.js";
 import jwt from "jsonwebtoken";
 
 const userSchema = Joi.object({
-  full_name: Joi.string().trim().required(),
+  fullName: Joi.string().trim().required(),
   email: Joi.string().email().trim().lowercase().required(),
   password: Joi.string().required(),
+  reapetPassword: Joi.string().required(),
 });
 
 export const registerUser = async (req, res) => {
   let userData = req.body;
 
-  console.info(userData.full_name);
+  console.info(userData);
+
+  try {
+    userData.password === userData.reapetPassword;
+  } catch (error) {
+    return res.status(400).send({ message: "Passwords do not match" }).end();
+  }
+
   try {
     userData = await userSchema.validateAsync(userData);
   } catch (error) {
@@ -27,7 +35,7 @@ export const registerUser = async (req, res) => {
     const connection = await mysql.createConnection(MYSQL_CONFIG);
     await connection.execute(
       `INSERT INTO users (full_name, email, password) VALUES (${mysql.escape(
-        userData.full_name
+        userData.fullName
       )},${mysql.escape(userData.email)}, '${hashedPassword}')`
     );
 
