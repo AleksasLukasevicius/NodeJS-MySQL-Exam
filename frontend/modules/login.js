@@ -26,14 +26,15 @@ loginForm.addEventListener("submit", async (event) => {
     if (response.ok) {
       loginForm.reset();
 
+      console.info(userData);
+
       localStorage.setItem("token", userData.token);
 
       document.cookie = `id=${userData.id}`;
 
-      alert("Successfully logged in");
-
       window.location.assign(`./index.html`);
-      return;
+
+      return alert("Successfully logged in");
     }
 
     if (!response.ok || response.status >= 400) {
