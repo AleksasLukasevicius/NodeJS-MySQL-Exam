@@ -4,7 +4,7 @@
     <meta charset="UTF-8" />
     <meta http-equiv="X-UA-Compatible" content="IE=edge" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Login</title>
+    <title>User Tutorials</title>
     <link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png" />
     <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png" />
     <link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png" />
@@ -33,9 +33,7 @@
 
   <body class="wrapper">
     <header>
-
       <div class="container">
-        
         <div class="top-shelf">
           <a href="./index.html">
             <img src="./assets/images/logo.svg" alt="VetBee" />
@@ -48,45 +46,19 @@
           <a href="./index.html">Goups</a>
           <a href="./login.html">Login</a>
           <a href="./register.html">Register</a>
-          <a href="./user-tutorials.html">User groups</a>
+          <a href="./user-groups.html">User groups</a>
         </nav>
-        
+      </div>
     </header>
 
     <main>
       <div class="container">
-        <h1 class="title">User Tutorials:</h1>
-
-        <form id="tutorial-form">
-          <div class="control">
-            <label for="title-input">Title</label>
-            <input
-              name="title-input"
-              id="title-input"
-              placeholder="Tutorial Title"
-              required
-            />
-          </div>
-
-          <div class="control">
-            <label for="content-input">Content</label>
-            <input
-              name="content-input"
-              id="content-input"
-              placeholder="Tutorial Content"
-              required
-            />
-          </div>
-
-          <div class="control">
-            <button class="btn" type="submit">Add Tutorial</button>
-          </div>
-        </form>
+        <h1 class="title">User Groups:</h1>
 
         <section id="content"></section>
       </div>
     </main>
 
-    <script type="module" src="./modules/postTutorial.js"></script>
+    <script type="module" src="./modules/renderUserTutorials.js"></script>
   </body>
 </html>

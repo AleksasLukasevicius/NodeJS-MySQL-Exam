@@ -1,6 +1,6 @@
 const getContent = async () => {
   try {
-    const response = await fetch("http://localhost:5000/v1/tutorials", {
+    const response = await fetch("http://localhost:5000/v1/groups", {
       headers: { authorization: `Bearer ${localStorage.getItem("token")}` },
     });
     const content = await response.json();

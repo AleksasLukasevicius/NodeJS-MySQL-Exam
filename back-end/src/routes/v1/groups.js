@@ -3,7 +3,7 @@ import { MYSQL_CONFIG } from "../../config.js";
 import jwt from "jsonwebtoken";
 import { jwtSecret } from "../../config.js";
 
-export const getTutorials = async (req, res) => {
+export const getGroups = async (req, res) => {
   const token = req.headers.authorization?.split(" ")[1];
 
   let payload = null;
@@ -16,7 +16,7 @@ export const getTutorials = async (req, res) => {
         const con = await mysql.createConnection(MYSQL_CONFIG);
 
         const [result] = await con.execute(
-          "SELECT * FROM tutorials WHERE isPrivate=0"
+          "SELECT * FROM groups WHERE isPrivate=0"
         );
 
         await con.end();
@@ -33,7 +33,7 @@ export const getTutorials = async (req, res) => {
   try {
     const con = await mysql.createConnection(MYSQL_CONFIG);
 
-    const [result] = await con.execute("SELECT * FROM tutorials");
+    const [result] = await con.execute("SELECT * FROM groups");
 
     await con.end();
 
@@ -44,7 +44,7 @@ export const getTutorials = async (req, res) => {
   }
 };
 
-export const getUserTutorials = async (req, res) => {
+export const getUserGroups = async (req, res) => {
   const token = req.headers.authorization?.split(" ")[1];
   const id = mysql.escape(req.params.id.trim());
   const cleanId = +id.replaceAll("'", "");
@@ -76,7 +76,7 @@ export const getUserTutorials = async (req, res) => {
   try {
     const con = await mysql.createConnection(MYSQL_CONFIG);
     const [result] = await con.execute(
-      `SELECT * FROM tutorials WHERE user_id=${cleanId}`
+      `SELECT * FROM groups WHERE user_id=${cleanId}`
     );
 
     await con.end();
@@ -88,10 +88,10 @@ export const getUserTutorials = async (req, res) => {
   }
 };
 
-export const postTutorial = async (req, res) => {
+export const postGroup = async (req, res) => {
   const token = req.headers.authorization?.split(" ")[1];
 
-  const { title, content } = req.body;
+  const { name } = req.body;
 
   let payload = null;
 
@@ -117,30 +117,26 @@ export const postTutorial = async (req, res) => {
       .end();
   };
 
-  if (!title || !content) {
-    return sendBadReqResponse(
-      "Please input all data for tutorial: title and content!"
-    );
+  if (!name) {
+    return sendBadReqResponse("Please input goup name.");
   }
 
-  const cleanTitle = mysql.escape(req.body.title?.trim());
+  const cleanName = mysql.escape(req.body.name?.trim());
 
-  const cleanContent = mysql.escape(req.body.content?.trim());
-
-  if (typeof cleanTitle !== "string" || typeof cleanContent !== "string") {
-    return sendBadReqResponse("Please input title and content as a string!");
+  if (typeof cleanName !== "string") {
+    return sendBadReqResponse("Please input group name as a string.");
   }
 
-  const query = `INSERT INTO tutorials (user_id, title, content) VALUES (${payload.id}, ${cleanTitle}, ${cleanContent})`;
+  const query = `INSERT INTO groups (name) VALUES (${cleanName})`;
 
   try {
-    const con = await mysql.createConnection(MYSQL_CONFIG);
+    const connection = await mysql.createConnection(MYSQL_CONFIG);
 
-    await con.execute(query);
+    await connection.execute(query);
 
-    await con.end();
+    await connection.end();
 
-    res.status(200).send("Provided data was inserted into table");
+    res.status(200).send({ message: `Group ${cleanName} was added` }.end());
   } catch (err) {
     res.status(500).send(err).end();
     return console.error(err);

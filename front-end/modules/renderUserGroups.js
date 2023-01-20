@@ -1,7 +1,7 @@
-import { getContent } from "./getContent.js";
+import { getUserGroups } from "./getUserGroups.js";
 
 const renderContent = async () => {
-  const groups = await getContent();
+  const groups = await getUserGroups();
 
   if (!groups) {
     return;
@@ -15,10 +15,10 @@ const renderContent = async () => {
   sectionContainer.replaceChildren();
 
   if (!groups.length) {
-    const noDataElement = document.createElement("h2");
-    noDataElement.textContent = "No data in database";
+    const noDataElemnet = document.createElement("h2");
+    noDataElemnet.textContent = "There is no groups assigned to you";
 
-    sectionContainer.append(noDataElement);
+    sectionContainer.append(noDataElemnet);
   }
 
   groups.forEach((group) => {
@@ -29,10 +29,11 @@ const renderContent = async () => {
     const contentElement = document.createElement("p");
 
     contentContainer.className = "contentContainer";
+
     nameElement.textContent = name;
     contentElement.textContent = content;
 
-    contentContainer.append(titleElement, contentElement, privateElement);
+    contentContainer.append(nameElement, contentElement, privateElement);
     sectionContainer.append(contentContainer);
   });
 };
