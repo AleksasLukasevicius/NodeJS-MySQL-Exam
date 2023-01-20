@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Goups</title>
+    <link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png" />
+    <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png" />
+    <link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png" />
+    <!-- <link rel="manifest" href="/site.webmanifest" /> -->
+
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Titillium+Web:wght@300;400;700&display=swap"
+      rel="stylesheet"
+    />
+    <link
+      href="https://fonts.googleapis.com/icon?family=Material+Icons"
+      rel="stylesheet"
+    />
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/normalize/8.0.1/normalize.min.css"
+      integrity="sha512-NhSC1YmyruXifcj/KFRWoC561YpHpc5Jtzgvbuzx5VozKpWvQ+4nXhPdFgmx8xqexRcpAglTj9sIBWINXa8x5w=="
+      crossorigin="anonymous"
+      referrerpolicy="no-referrer"
+    />
+    <link rel="stylesheet" href="style.css" />
+    <script src="./modules/hamburger.js" defer></script>
+  </head>
+
+  <body class="wrapper">
+    <header>
+      <div class="container">
+        <div class="top-shelf">
+          <a href="./index.html">
+            <img src="./assets/images/logo.svg" alt="VetBee" />
+          </a>
+
+          <span class="material-icons" id="nav-hamburger">reorder</span>
+        </div>
+
+        <nav>
+          <a href="./index.html">Goups</a>
+          <a href="./login.html">Login</a>
+          <a href="./register.html">Register</a>
+          <a href="./user-tutorials.html">User groups</a>
+        </nav>
+      </div>
+    </header>
+
+    <main>
+      <div class="container">
+        <h1 class="title">Goups:</h1>
+        <section id="content"></section>
+      </div>
+    </main>
+
+    <script type="module" src="./modules/renderContent.js"></script>
+  </body>
+</html>
