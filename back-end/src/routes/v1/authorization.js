@@ -5,7 +5,7 @@ import { MYSQL_CONFIG } from "../../config.js";
 import { jwtSecret } from "../../config.js";
 import jwt from "jsonwebtoken";
 
-const userSchema = Joi.object({
+const userSigninSchema = Joi.object({
   fullName: Joi.string().trim().required(),
   email: Joi.string().email().trim().lowercase().required(),
   password: Joi.string().required(),
@@ -15,8 +15,6 @@ const userSchema = Joi.object({
 export const registerUser = async (req, res) => {
   let userData = req.body;
 
-  console.info(userData);
-
   try {
     userData.password === userData.reapetPassword;
   } catch (error) {
@@ -24,7 +22,7 @@ export const registerUser = async (req, res) => {
   }
 
   try {
-    userData = await userSchema.validateAsync(userData);
+    userData = await userSigninSchema.validateAsync(userData);
   } catch (error) {
     return res.status(400).send({ error: error.message }).end();
   }
@@ -47,21 +45,27 @@ export const registerUser = async (req, res) => {
   }
 };
 
+const userLoginSchema = Joi.object({
+  email: Joi.string().email().trim().lowercase().required(),
+  password: Joi.string().required(),
+});
+
 export const loginUser = async (req, res) => {
   let userData = req.body;
+
   try {
-    userData = await userSchema.validateAsync(userData);
+    userData = await userLoginSchema.validateAsync(userData);
   } catch (error) {
-    return res.status(400).send({ error: "Incorrect email or password" }).end();
+    return res.status(400).send({ error: "Incorrect  or password" }).end();
   }
 
   try {
-    const con = await mysql.createConnection(MYSQL_CONFIG);
-    const [data] = await con.execute(
+    const connection = await mysql.createConnection(MYSQL_CONFIG);
+    const [data] = await connection.execute(
       `SELECT * FROM users WHERE email = ${mysql.escape(userData.email)}`
     );
 
-    await con.end();
+    await connection.end();
 
     if (!data.length) {
       return res
