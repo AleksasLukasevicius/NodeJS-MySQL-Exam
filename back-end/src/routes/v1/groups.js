@@ -142,6 +142,7 @@ export const postGroup = async (req, res) => {
       .end();
   } catch (error) {
     res.status(500).send(error).end();
+
     return console.error(error);
   }
 };
