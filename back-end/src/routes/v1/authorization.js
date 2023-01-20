@@ -67,7 +67,7 @@ export const loginUser = async (req, res) => {
 
     await connection.end();
 
-    if (!data.length) {
+    if (!data.length || Array.isArray(data)) {
       return res
         .status(400)
         .send({ error: "Incorrect email or password" })
