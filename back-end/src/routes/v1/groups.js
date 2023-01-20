@@ -118,7 +118,7 @@ export const postGroup = async (req, res) => {
   };
 
   if (!name) {
-    return sendBadReqResponse("Please input goup name.");
+    return sendBadReqResponse("Please input group name.");
   }
 
   const cleanName = mysql.escape(req.body.name?.trim());
@@ -127,7 +127,7 @@ export const postGroup = async (req, res) => {
     return sendBadReqResponse("Please input group name as a string.");
   }
 
-  const query = `INSERT INTO groups (name) VALUES (${cleanName})`;
+  const query = `INSERT INTO groupsdb.groups (name) VALUES (${cleanName})`;
 
   try {
     const connection = await mysql.createConnection(MYSQL_CONFIG);
@@ -136,9 +136,12 @@ export const postGroup = async (req, res) => {
 
     await connection.end();
 
-    res.status(200).send({ message: `Group ${cleanName} was added` }.end());
-  } catch (err) {
-    res.status(500).send(err).end();
-    return console.error(err);
+    res
+      .status(200)
+      .send({ message: `Group ${cleanName} was added` })
+      .end();
+  } catch (error) {
+    res.status(500).send(error).end();
+    return console.error(error);
   }
 };
