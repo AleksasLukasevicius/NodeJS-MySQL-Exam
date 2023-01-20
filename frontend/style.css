@@ -1,0 +1,162 @@
+body {
+  font-family: "Titillium Web", sans-serif;
+}
+
+.container {
+  padding: 1.125rem;
+}
+
+#content {
+  margin: 2rem 0;
+  display: flex;
+  justify-content: space-between;
+  gap: 2rem;
+  flex-wrap: wrap;
+}
+
+.contentContainer {
+  text-align: left;
+  border-radius: 1rem;
+  border: 1px solid #f2f2f2;
+  padding: 1rem;
+  width: 12rem;
+  box-shadow: 2px 2px 2px rgba(0, 0, 0, 0.15);
+}
+
+.contentContainer > h2 {
+  font-weight: bold;
+}
+
+header {
+  box-shadow: 0 1px 1px rgba(0, 0, 0, 0.1);
+  text-align: center;
+}
+
+header .top-shelf {
+  align-items: center;
+  display: flex;
+  justify-content: space-between;
+}
+
+header img {
+  height: 4rem;
+}
+
+#nav-hamburger {
+  color: #ffd400;
+  font-size: 2rem;
+}
+
+nav {
+  max-height: 0;
+  opacity: 0;
+  padding: 0;
+  text-align: left;
+  transition: max-height 1s, padding-top 0.5s, padding-bottom 0.5s;
+}
+
+nav.visible {
+  max-height: 80vh;
+  opacity: 1;
+  padding: 1rem 0;
+  transition: max-height 1s, padding-top 0.5s, padding-bottom 0.5s, opacity 1s;
+}
+
+nav a {
+  text-decoration: none;
+  color: #000;
+  display: block;
+  padding: 0.5rem 0;
+  font-size: 2rem;
+  margin-right: 1rem;
+}
+
+nav a:first-child {
+  padding-top: 0;
+}
+
+nav a:last-child {
+  padding-bottom: 0;
+}
+
+.title {
+  margin-bottom: 0.75rem;
+  margin-top: 0;
+}
+
+.control {
+  padding: 0.75rem 0;
+}
+
+label {
+  font-weight: bold;
+}
+
+input {
+  box-sizing: border-box;
+  width: 100%;
+  padding: 0.5rem 0;
+  font-size: 1.1rem;
+  border: 0;
+  border-bottom: 0.125rem solid rgb(0, 0, 0);
+}
+
+input::placeholder {
+  color: rgba(0, 0, 0, 0.2);
+}
+
+input:focus {
+  border-color: rgba(0, 0, 0, 0.5);
+  transition: border-color 1s;
+  outline: 0;
+}
+
+.btn {
+  background: #000;
+  border: 0;
+  color: #fff;
+  padding: 1rem 1.75rem;
+  text-transform: uppercase;
+}
+
+@media (min-width: 60rem) {
+  .container {
+    max-width: 50rem;
+    margin: 0 auto;
+  }
+
+  header img {
+    height: 3rem;
+    padding: 0.5rem 0;
+  }
+
+  header .container {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+  }
+
+  header .top-shelf {
+    display: block;
+  }
+
+  #nav-hamburger {
+    display: none;
+  }
+
+  nav {
+    opacity: 1;
+    max-height: inherit;
+  }
+
+  nav a {
+    display: inline;
+    font-size: 1.125rem;
+    padding: 0;
+  }
+
+  main > .container {
+    padding-top: 2rem;
+    padding-bottom: 2rem;
+  }
+}
