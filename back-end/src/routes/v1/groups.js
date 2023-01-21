@@ -4,9 +4,9 @@ import { MYSQL_CONFIG } from "../../config.js";
 import { jwtSecret } from "../../config.js";
 
 export const getGroups = async (req, res) => {
-  const token = req.headers.authorization?.split(" ")[1];
+  // const token = req.headers.authorization?.split(" ")[1];
 
-  let payload = null;
+  // let payload = null;
 
   // try {
   //   payload = jwt.verify(token, jwtSecret);

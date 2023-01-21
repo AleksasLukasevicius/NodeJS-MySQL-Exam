@@ -11,8 +11,6 @@ const renderContent = async () => {
     return;
   }
 
-  console.info({ groups });
-
   const sectionContainer = document.body.querySelector("#content");
   sectionContainer.replaceChildren();
 
