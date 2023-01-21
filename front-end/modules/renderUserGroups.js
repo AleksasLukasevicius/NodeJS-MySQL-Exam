@@ -25,12 +25,12 @@ const renderContent = async () => {
     const { id, name } = group;
 
     const contentContainer = document.createElement("div");
-    const nameElement = document.createElement("h4");
     const idElement = document.createElement("p");
+    const nameElement = document.createElement("h4");
 
     contentContainer.className = "contentContainer";
-    nameElement.textContent = name;
     idElement.textContent = `Group id number ${id}`;
+    nameElement.textContent = name;
 
     contentContainer.append(idElement, nameElement);
     sectionContainer.append(contentContainer);

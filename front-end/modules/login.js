@@ -26,7 +26,7 @@ loginForm.addEventListener("submit", async (event) => {
     if (response.ok) {
       loginForm.reset();
 
-      console.info(userData);
+      console.info({ userData });
 
       localStorage.setItem("token", userData.token);
 

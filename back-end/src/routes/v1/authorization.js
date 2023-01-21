@@ -86,21 +86,3 @@ export const loginUser = async (req, res) => {
     return res.status(500).send({ error: "Unexpected error" });
   }
 };
-
-export const getUserCount = async (_, res) => {
-  try {
-    const con = await mysql.createConnection(MYSQL_CONFIG);
-
-    const [result] = await con.execute(
-      `SELECT COUNT(id) AS usersCount FROM users`
-    );
-
-    await con.end();
-
-    res.send(result).end();
-  } catch (err) {
-    res.status(500).send(err).end();
-
-    return console.error();
-  }
-};

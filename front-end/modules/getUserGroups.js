@@ -4,6 +4,8 @@ const getUserGroups = async () => {
     .find((cookie) => cookie.startsWith("id="))
     ?.split("=")[1];
 
+  console.info(id);
+
   if (!id) {
     alert("Please login to see your private groups");
 
@@ -17,7 +19,7 @@ const getUserGroups = async () => {
     const content = await response.json();
 
     if (!response.ok || response.status >= 400) {
-      alert(content.error || content.statusText);
+      alert(content.error || response.statusText);
 
       return window.location.assign(`./login.html`);
     }
