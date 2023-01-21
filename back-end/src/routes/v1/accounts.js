@@ -125,9 +125,9 @@ export const postAccount = async (req, res) => {
     const connection = await mysql.createConnection(MYSQL_CONFIG);
     const [isUserInGroup] = await connection.execute(userExistsInGroup);
 
-    if (!isUserInGroup) {
+    if (isUserInGroup.length && Array.isArray(isUserInGroup)) {
       return sendBadReqResponse(
-        `User is already in group number: ${cleanGroupId}.`
+        `User ${cleanUserId} is already in account number: ${cleanGroupId}.`
       );
     }
 
@@ -137,7 +137,7 @@ export const postAccount = async (req, res) => {
 
     res
       .status(200)
-      .send({ message: `User added to group ${cleanGroupId}.` })
+      .send({ message: `User added to account ${cleanGroupId}.` })
       .end();
   } catch (error) {
     res.status(500).send(error).end();
