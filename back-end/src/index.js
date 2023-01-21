@@ -3,7 +3,7 @@ import cors from "cors";
 import { SERVER_PORT } from "./config.js";
 import { loginUser, registerUser } from "./routes/v1/authorization.js";
 import { getGroups, getUserGroups, postGroup } from "./routes/v1/groups.js";
-import { postAccount } from "./routes/v1/accounts.js";
+import { getUserAccounts, postAccount } from "./routes/v1/accounts.js";
 
 const app = express();
 
@@ -17,6 +17,7 @@ app.post("/v1/accounts", postAccount);
 
 app.get("/v1/groups", getGroups);
 app.get("/v1/groups/:id", getUserGroups);
+app.get("/v1/accounts", getUserAccounts);
 
 app.get("/", (_, res) => {
   res.send({ message: "Server is running" });
