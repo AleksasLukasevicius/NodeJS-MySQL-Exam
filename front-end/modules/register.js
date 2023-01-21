@@ -14,6 +14,10 @@ registerForm.addEventListener("submit", async (event) => {
     .querySelector("#reapet-password-input")
     .value.trim();
 
+  if (passwordInputValue != reapetPasswordInputValue) {
+    return alert("Passwords do not match.");
+  }
+
   try {
     const response = await fetch(
       "http://localhost:5000/v1/authorization/register",

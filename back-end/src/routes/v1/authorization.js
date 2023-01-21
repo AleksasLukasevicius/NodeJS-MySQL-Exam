@@ -16,12 +16,6 @@ export const registerUser = async (req, res) => {
   let userData = req.body;
 
   try {
-    userData.password === userData.reapetPassword;
-  } catch (error) {
-    return res.status(400).send({ message: "Passwords do not match" }).end();
-  }
-
-  try {
     userData = await userSigninSchema.validateAsync(userData);
   } catch (error) {
     return res.status(400).send({ error: error.message }).end();
