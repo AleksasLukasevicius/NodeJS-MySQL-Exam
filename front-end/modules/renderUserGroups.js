@@ -22,18 +22,17 @@ const renderContent = async () => {
   }
 
   groups.forEach((group) => {
-    const { name } = group;
+    const { id, name } = group;
 
     const contentContainer = document.createElement("div");
     const nameElement = document.createElement("h4");
-    const contentElement = document.createElement("p");
+    const idElement = document.createElement("p");
 
     contentContainer.className = "contentContainer";
-
     nameElement.textContent = name;
-    contentElement.textContent = content;
+    idElement.textContent = `Group id number ${id}`;
 
-    contentContainer.append(nameElement, contentElement, privateElement);
+    contentContainer.append(idElement, nameElement);
     sectionContainer.append(contentContainer);
   });
 };
