@@ -1,6 +1,6 @@
 import mysql from "mysql2/promise";
-import { MYSQL_CONFIG } from "../../config.js";
 import jwt from "jsonwebtoken";
+import { MYSQL_CONFIG } from "../../config.js";
 import { jwtSecret } from "../../config.js";
 
 export const getGroups = async (req, res) => {
@@ -8,38 +8,39 @@ export const getGroups = async (req, res) => {
 
   let payload = null;
 
+  // try {
+  //   payload = jwt.verify(token, jwtSecret);
+  // } catch (error) {
+  //   if (error instanceof jwt.JsonWebTokenError) {
+  //     try {
+  //       const connection = await mysql.createConnection(MYSQL_CONFIG);
+
+  //       const [result] = await con.execute(
+  //         "SELECT * FROM groupsdb.groups WHERE isPrivate=0"
+  //       );
+
+  //       await connection.end();
+
+  //       return res.status(200).send(result).end();
+  //     } catch (error) {
+  //       res.status(500).send(error).end();
+  //       return console.error(error);
+  //     }
+  //   }
+  //   return res.status(400).send(error).end();
+  // }
+
   try {
-    payload = jwt.verify(token, jwtSecret);
-  } catch (error) {
-    if (error instanceof jwt.JsonWebTokenError) {
-      try {
-        const con = await mysql.createConnection(MYSQL_CONFIG);
+    const connection = await mysql.createConnection(MYSQL_CONFIG);
 
-        const [result] = await con.execute(
-          "SELECT * FROM groups WHERE isPrivate=0"
-        );
+    const [result] = await connection.execute("SELECT * FROM groupsdb.groups");
 
-        await con.end();
-
-        return res.status(200).send(result).end();
-      } catch (error) {
-        res.status(500).send(error).end();
-        return console.error(error);
-      }
-    }
-    return res.status(400).send(error).end();
-  }
-
-  try {
-    const con = await mysql.createConnection(MYSQL_CONFIG);
-
-    const [result] = await con.execute("SELECT * FROM groups");
-
-    await con.end();
+    await connection.end();
 
     return res.status(200).send(result).end();
   } catch (error) {
     res.status(500).send(error).end();
+
     return console.error(error);
   }
 };
@@ -66,20 +67,20 @@ export const getUserGroups = async (req, res) => {
 
   try {
     payload = jwt.verify(token, jwtSecret);
-  } catch (err) {
-    if (err instanceof jwt.JsonWebTokenError) {
+  } catch (error) {
+    if (error instanceof jwt.JsonWebTokenError) {
       return res.status(401).send({ error: "User unauthorised" }).end();
     }
     return res.status(400).end();
   }
 
   try {
-    const con = await mysql.createConnection(MYSQL_CONFIG);
+    const connection = await mysql.createConnection(MYSQL_CONFIG);
     const [result] = await con.execute(
-      `SELECT * FROM groups WHERE user_id=${cleanId}`
+      `SELECT * FROM groupsdb.groups WHERE user_id=${cleanId}`
     );
 
-    await con.end();
+    await connection.end();
 
     return res.status(200).send(result).end();
   } catch (error) {

@@ -1,23 +1,21 @@
-const getContent = async () => {
+const getGroups = async () => {
   try {
     const response = await fetch("http://localhost:5000/v1/groups", {
       headers: { authorization: `Bearer ${localStorage.getItem("token")}` },
     });
-    const content = await response.json();
-
-    console.info(content);
+    const groups = await response.json();
 
     if (!response.ok || response.status >= 400) {
-      alert(content.error || content.statusText);
+      alert(groups.error || groups.statusText);
       return window.location.assign(`./login.html`);
     }
 
     if (response.ok) {
-      return content;
+      return groups;
     }
   } catch (error) {
     console.log(error);
   }
 };
 
-export { getContent };
+export { getGroups };
