@@ -26,13 +26,11 @@ loginForm.addEventListener("submit", async (event) => {
     if (response.ok) {
       loginForm.reset();
 
-      console.info(userData);
-
       localStorage.setItem("token", userData.token);
 
       document.cookie = `id=${userData.id}`;
 
-      window.location.assign(`./index.html`);
+      window.location.assign(`./user-groups.html`);
 
       return alert("Successfully logged in");
     }

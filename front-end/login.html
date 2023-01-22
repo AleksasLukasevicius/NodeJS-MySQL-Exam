@@ -33,60 +33,58 @@
 
   <body class="wrapper">
     <header>
-
       <div class="container">
-        
         <div class="top-shelf">
-          <a href="./index.html">
+          <a href="./groups.html">
             <img src="./assets/images/logo.svg" alt="VetBee" />
           </a>
 
           <span class="material-icons" id="nav-hamburger">reorder</span>
         </div>
-
         <nav>
-          <a href="./index.html">Goups</a>
+          <a href="./groups.html">Goups</a>
           <a href="./login.html">Login</a>
           <a href="./register.html">Register</a>
-          <a href="./user-tutorials.html">User groups</a>
+          <a href="./user-groups.html">User groups</a>
         </nav>
-        
+      </div>
     </header>
 
     <main>
       <div class="container">
-        <h1 class="title">User Tutorials:</h1>
+        <h1 class="title">Login</h1>
 
-        <form id="tutorial-form">
+        <form id="login-form">
           <div class="control">
-            <label for="title-input">Title</label>
+            <label for="email">Email</label>
             <input
-              name="title-input"
-              id="title-input"
-              placeholder="Tutorial Title"
+              type="email"
+              name="email"
+              autocomplete="email"
+              id="email-input"
+              placeholder="email@email.com"
               required
             />
           </div>
-
           <div class="control">
-            <label for="content-input">Content</label>
+            <label for="password">Password</label>
             <input
-              name="content-input"
-              id="content-input"
-              placeholder="Tutorial Content"
+              type="password"
+              name="password"
+              autocomplete="current-password"
+              id="password-input"
+              placeholder="Password"
               required
             />
           </div>
-
           <div class="control">
-            <button class="btn" type="submit">Add Tutorial</button>
+            <button type="submit" class="btn">Login</button>
+            <p>Don't have an account? <a href="./register.html">Register</a></p>
           </div>
         </form>
-
-        <section id="content"></section>
       </div>
     </main>
 
-    <script type="module" src="./modules/postTutorial.js"></script>
+    <script type="module" src="./modules/login.js"></script>
   </body>
 </html>

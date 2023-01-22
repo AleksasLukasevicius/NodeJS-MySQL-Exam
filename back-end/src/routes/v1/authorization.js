@@ -16,12 +16,6 @@ export const registerUser = async (req, res) => {
   let userData = req.body;
 
   try {
-    userData.password === userData.reapetPassword;
-  } catch (error) {
-    return res.status(400).send({ message: "Passwords do not match" }).end();
-  }
-
-  try {
     userData = await userSigninSchema.validateAsync(userData);
   } catch (error) {
     return res.status(400).send({ error: error.message }).end();
@@ -67,7 +61,7 @@ export const loginUser = async (req, res) => {
 
     await connection.end();
 
-    if (!data.length || Array.isArray(data)) {
+    if (!data.length) {
       return res
         .status(400)
         .send({ error: "Incorrect email or password" })
@@ -90,23 +84,5 @@ export const loginUser = async (req, res) => {
     return res.status(400).send({ error: "Incorrect email or password" }).end();
   } catch (error) {
     return res.status(500).send({ error: "Unexpected error" });
-  }
-};
-
-export const getUserCount = async (_, res) => {
-  try {
-    const con = await mysql.createConnection(MYSQL_CONFIG);
-
-    const [result] = await con.execute(
-      `SELECT COUNT(id) AS usersCount FROM users`
-    );
-
-    await con.end();
-
-    res.send(result).end();
-  } catch (err) {
-    res.status(500).send(err).end();
-
-    return console.error();
   }
 };
