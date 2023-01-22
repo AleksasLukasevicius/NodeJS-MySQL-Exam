@@ -1,35 +1,36 @@
 import { getUserGroups } from "./getUserGroups.js";
 
 const renderContent = async () => {
-  const groups = await getUserGroups();
+  const userGroups = await getUserGroups();
 
-  if (!groups) {
+  if (!userGroups) {
     return;
   }
 
-  if (groups.error) {
+  if (userGroups.error) {
     return;
   }
 
   const sectionContainer = document.body.querySelector("#content");
   sectionContainer.replaceChildren();
 
-  if (!groups.length) {
+  if (!userGroups.length) {
     const noDataElemnet = document.createElement("h2");
-    noDataElemnet.textContent = "There is no groups assigned to you";
+    noDataElemnet.textContent = "There is no user roups assigned to you";
 
     sectionContainer.append(noDataElemnet);
   }
+  console.info(userGroups);
 
-  groups.forEach((group) => {
-    const { id, name } = group;
+  userGroups.forEach((group) => {
+    const { group_id, name } = group;
 
     const contentContainer = document.createElement("div");
     const idElement = document.createElement("p");
     const nameElement = document.createElement("h4");
 
     contentContainer.className = "contentContainer";
-    idElement.textContent = `Group id number ${id}`;
+    idElement.textContent = `Group id number ${group_id}`;
     nameElement.textContent = name;
 
     contentContainer.append(idElement, nameElement);

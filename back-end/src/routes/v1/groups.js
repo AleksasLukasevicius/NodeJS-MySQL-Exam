@@ -28,7 +28,7 @@ export const getUserGroups = async (req, res) => {
     return res
       .status(400)
       .send({
-        error: `Please provide a proper id in the URL: current id ${cleanId} incorrect.`,
+        error: `Please provide a proper id, current id ${cleanId} incorrect.`,
       })
       .end();
   }
@@ -50,8 +50,8 @@ export const getUserGroups = async (req, res) => {
 
   try {
     const connection = await mysql.createConnection(MYSQL_CONFIG);
-    const [result] = await con.execute(
-      `SELECT * FROM groupsdb.groups WHERE user_id=${cleanId}`
+    const [result] = await connection.execute(
+      `SELECT * FROM groupsdb.accounts WHERE user_id=${cleanId}`
     );
 
     await connection.end();

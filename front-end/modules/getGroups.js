@@ -11,6 +11,8 @@ const getGroups = async () => {
     }
 
     if (response.ok) {
+      console.info(groups);
+
       return groups;
     }
   } catch (error) {

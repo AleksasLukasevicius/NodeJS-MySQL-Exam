@@ -16,7 +16,7 @@ app.post("/v1/groups", postGroup);
 app.post("/v1/accounts", postAccount);
 
 app.get("/v1/groups", getGroups);
-app.get("/v1/groups/:id", getUserGroups);
+app.get("/v1/user-groups/:id", getUserGroups);
 app.get("/v1/accounts", getUserAccounts);
 
 app.get("/", (_, res) => {
