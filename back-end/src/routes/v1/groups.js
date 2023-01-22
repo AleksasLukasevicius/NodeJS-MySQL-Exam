@@ -63,7 +63,7 @@ export const getUserGroups = async (req, res) => {
   }
 };
 
-export const postGroup = async (req, res) => {
+export const addGroup = async (req, res) => {
   const token = req.headers.authorization?.split(" ")[1];
 
   const { name } = req.body;

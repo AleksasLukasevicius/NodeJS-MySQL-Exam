@@ -2,8 +2,8 @@ import express from "express";
 import cors from "cors";
 import { SERVER_PORT } from "./config.js";
 import { loginUser, registerUser } from "./routes/v1/authorization.js";
-import { getGroups, getUserGroups, postGroup } from "./routes/v1/groups.js";
-import { getUserAccounts, postAccount } from "./routes/v1/accounts.js";
+import { addGroup, getGroups, getUserGroups } from "./routes/v1/groups.js";
+import { addAccount, getUserAccounts } from "./routes/v1/accounts.js";
 import { addBill, getGroupBills } from "./routes/v1/bills.js";
 
 const app = express();
@@ -13,8 +13,8 @@ app.use(express.json());
 
 app.post("/v1/authorization/register", registerUser);
 app.post("/v1/authorization/login", loginUser);
-app.post("/v1/groups", postGroup);
-app.post("/v1/accounts", postAccount);
+app.post("/v1/groups", addGroup);
+app.post("/v1/accounts", addAccount);
 app.post("/v1/bills", addBill);
 
 app.get("/v1/groups", getGroups);

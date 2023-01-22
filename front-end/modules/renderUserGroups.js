@@ -1,6 +1,6 @@
 import { getUserGroups } from "./getUserGroups.js";
 
-const renderContent = async () => {
+const renderUserGroups = async () => {
   const userGroups = await getUserGroups();
 
   if (!userGroups) {
@@ -48,4 +48,4 @@ const renderContent = async () => {
   });
 };
 
-await renderContent();
+await renderUserGroups();

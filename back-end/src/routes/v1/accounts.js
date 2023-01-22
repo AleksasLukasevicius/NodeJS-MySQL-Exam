@@ -22,7 +22,7 @@ export const getUserAccounts = async (req, res) => {
   }
 };
 
-export const postAccount = async (req, res) => {
+export const addAccount = async (req, res) => {
   const token = req.headers.authorization?.split(" ")[1];
   const decryptedToken = jwt.verify(token, jwtSecret);
   const user_id = decryptedToken.id;

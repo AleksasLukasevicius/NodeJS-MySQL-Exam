@@ -1,6 +1,6 @@
 import { getBills } from "./getBills.js";
 
-const renderContent = async () => {
+const renderBills = async () => {
   const bills = await getBills();
 
   if (!bills) {
@@ -20,47 +20,43 @@ const renderContent = async () => {
 
     sectionContainer.append(noDataElement);
   }
+
   const billsContainer = document.createElement("div");
+  const billsTableElement = document.createElement("table");
+  const tbodyElement = document.createElement("tbody");
+  const tableRowElement = document.createElement("tr");
+  const thIdElement = document.createElement("th");
+  const thDescriptionElement = document.createElement("th");
+  const thAmountElement = document.createElement("th");
+
   billsContainer.id = "bills-container";
+  billsTableElement.id = "bills-table";
+  tbodyElement.id = "tbody";
+  thIdElement.textContent = "Id";
+  thDescriptionElement.textContent = "Description";
+  thAmountElement.textContent = "Amount";
 
-  const billsTableEl = document.createElement("table");
-  billsTableEl.id = "bills-table";
-
-  const tbodyEl = document.createElement("tbody");
-  tbodyEl.id = "tbody";
-
-  const tableRowEl = document.createElement("tr");
-  const thIdEl = document.createElement("th");
-  const thDescriptionEl = document.createElement("th");
-  const thAmountEl = document.createElement("th");
-
-  thIdEl.textContent = "ID";
-  thDescriptionEl.textContent = "Description";
-  thAmountEl.textContent = "Amount";
-
-  tableRowEl.append(thIdEl, thDescriptionEl, thAmountEl);
-  tbodyEl.append(tableRowEl);
-  billsTableEl.append(tbodyEl);
-
-  billsContainer.append(billsTableEl);
+  tableRowElement.append(thIdElement, thDescriptionElement, thAmountElement);
+  tbodyElement.append(tableRowElement);
+  billsTableElement.append(tbodyElement);
+  billsContainer.append(billsTableElement);
 
   bills.forEach((bill) => {
     const { id, amount, description } = bill;
 
-    const rowEl = document.createElement("tr");
+    const rowElement = document.createElement("tr");
+    const idElement = document.createElement("td");
+    const descriptionElement = document.createElement("td");
+    const amountElement = document.createElement("td");
 
-    const idEl = document.createElement("td");
-    const descriptionEl = document.createElement("td");
-    const amountEl = document.createElement("td");
+    idElement.textContent = id;
+    descriptionElement.textContent = description;
+    amountElement.textContent = `${amount} $`;
 
-    idEl.textContent = id;
-    descriptionEl.textContent = description;
-    amountEl.textContent = `${currency}${amount}`;
-
-    rowEl.append(idEl, descriptionEl, amountEl);
-    tbodyEl.append(rowEl);
+    rowElement.append(idElement, descriptionElement, amountElement);
+    tbodyElement.append(rowElement);
   });
   sectionContainer.append(billsContainer);
 };
 
-await renderContent();
+await renderBills();
