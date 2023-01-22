@@ -9,9 +9,7 @@ const getBills = async () => {
     const bills = await response.json();
 
     if (!response.ok || response.status >= 400) {
-      alert(bills.error || bills.statusText);
-
-      return window.location.assign(`./login.html`);
+      return alert(bills.error || bills.statusText);
     }
 
     return bills;

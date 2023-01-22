@@ -1,6 +1,6 @@
 const billForm = document.querySelector("form#addBill-form");
 
-addBill.addEventListener("submit", async (event) => {
+billForm.addEventListener("submit", async (event) => {
   event.preventDefault();
 
   const urlParams = new URLSearchParams(window.location.search);

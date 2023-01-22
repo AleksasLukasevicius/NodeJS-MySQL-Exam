@@ -3,7 +3,7 @@ import jwt from "jsonwebtoken";
 import { MYSQL_CONFIG } from "../../config.js";
 import { jwtSecret } from "../../config.js";
 
-export const getGroups = async (req, res) => {
+export const getGroups = async (_, res) => {
   try {
     const connection = await mysql.createConnection(MYSQL_CONFIG);
 
@@ -24,7 +24,7 @@ export const getUserGroups = async (req, res) => {
   const id = mysql.escape(req.params.id.trim());
   const cleanId = +id.replaceAll("'", "");
 
-  if (cleanId < 0 || Number.isNaN(cleanId) || typeof cleanId !== "number") {
+  if (!cleanId) {
     return res
       .status(400)
       .send({
