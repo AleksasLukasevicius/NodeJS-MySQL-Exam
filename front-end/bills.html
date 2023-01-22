@@ -4,7 +4,7 @@
     <meta charset="UTF-8" />
     <meta http-equiv="X-UA-Compatible" content="IE=edge" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Post groups</title>
+    <title>Group bill</title>
     <link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png" />
     <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png" />
     <link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png" />
@@ -53,28 +53,43 @@
 
     <main>
       <div class="container">
-        <h1 class="title">User Groups:</h1>
+        <h1 class="title">Groups bills:</h1>
 
-        <form id="group-form">
+        <section id="content"></section>
+      </div>
+
+      <div class="container">
+        <h1 class="title">Add bill:</h1>
+
+        <form id="addBill-form">
           <div class="control">
-            <label for="name-input">Title</label>
+            <label for="description-input">Descirption</label>
             <input
-              name="name-input"
-              id="name-input"
-              placeholder="Group name"
+              name="description-input"
+              id="description-input"
+              placeholder="description"
+              required
+            />
+          </div>
+          <div class="control">
+            <label for="amount-input">Amount</label>
+            <input
+              type="number"
+              name="amount-input"
+              id="amount-input"
+              placeholder="amount"
               required
             />
           </div>
 
           <div class="control">
-            <button class="btn" type="submit">Add Group</button>
+            <button class="btn" type="submit">Add bill</button>
           </div>
         </form>
-
-        <section id="content"></section>
       </div>
     </main>
 
-    <script type="module" src="./modules/postGroup.js"></script>
+    <script type="module" src="./modules/renderBills.js"></script>
+    <script type="module" src="./modules/addBill.js"></script>
   </body>
 </html>

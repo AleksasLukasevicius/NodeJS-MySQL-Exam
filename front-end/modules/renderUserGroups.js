@@ -25,7 +25,9 @@ const renderContent = async () => {
     const { group_id, name } = group;
 
     const contentContainer = document.createElement("div");
-    const idElement = document.createElement("p");
+
+    const idElement = document.createElement("a");
+
     const nameElement = document.createElement("h4");
 
     contentContainer.className = "contentContainer";
@@ -34,6 +36,15 @@ const renderContent = async () => {
 
     contentContainer.append(idElement, nameElement);
     sectionContainer.append(contentContainer);
+
+    idElement.addEventListener("click", () => {
+      const route = location.pathname;
+      const redirectRoute = route.replace(
+        "user-groups.html",
+        `bills.html?group_id=${group_id}`
+      );
+      location.assign(redirectRoute);
+    });
   });
 };
 

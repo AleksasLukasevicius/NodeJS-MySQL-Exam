@@ -19,8 +19,6 @@ groupIdForm.addEventListener("submit", async (event) => {
       }),
     });
 
-    console.info({ response });
-
     if (response.ok) {
       groupIdForm.reset();
 

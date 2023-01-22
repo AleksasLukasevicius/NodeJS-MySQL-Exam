@@ -4,7 +4,7 @@ import { SERVER_PORT } from "./config.js";
 import { loginUser, registerUser } from "./routes/v1/authorization.js";
 import { getGroups, getUserGroups, postGroup } from "./routes/v1/groups.js";
 import { getUserAccounts, postAccount } from "./routes/v1/accounts.js";
-import { getGroupBills, postBill } from "./routes/v1/bills.js";
+import { addBill, getGroupBills } from "./routes/v1/bills.js";
 
 const app = express();
 
@@ -15,7 +15,7 @@ app.post("/v1/authorization/register", registerUser);
 app.post("/v1/authorization/login", loginUser);
 app.post("/v1/groups", postGroup);
 app.post("/v1/accounts", postAccount);
-app.post("/v1/bills", postBill);
+app.post("/v1/bills", addBill);
 
 app.get("/v1/groups", getGroups);
 app.get("/v1/user-groups/", getUserGroups);

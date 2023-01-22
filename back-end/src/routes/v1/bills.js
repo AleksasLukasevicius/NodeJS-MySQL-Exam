@@ -46,7 +46,7 @@ export const getGroupBills = async (req, res) => {
   }
 };
 
-export const postBill = async (req, res) => {
+export const addBill = async (req, res) => {
   const token = req.headers.authorization?.split(" ")[1];
   const groupId = +req.body.groupId;
   const amount = +req.body.amount;
