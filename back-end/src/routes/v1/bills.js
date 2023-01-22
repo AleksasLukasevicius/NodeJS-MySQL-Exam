@@ -1,0 +1,111 @@
+import mysql from "mysql2/promise";
+import jwt from "jsonwebtoken";
+import { MYSQL_CONFIG } from "../../config.js";
+import { jwtSecret } from "../../config.js";
+
+export const getGroupBills = async (req, res) => {
+  const token = req.headers.authorization?.split(" ")[1];
+  const groupId = +req.params.group_id;
+  // const id = mysql.escape(req.params.id.trim());
+  // const cleanId = +id.replaceAll("'", "");
+  let payload = null;
+
+  if (!groupId) {
+    return res
+      .status(400)
+      .send({
+        error: `Please provide a proper id, current id ${groupId} incorrect.`,
+      })
+      .end();
+  }
+
+  if (!token) {
+    return res.status(401).send({ error: "User unauthorised" }).end();
+  }
+
+  try {
+    payload = jwt.verify(token, jwtSecret);
+  } catch (error) {
+    if (error instanceof jwt.JsonWebTokenError) {
+      return res.status(401).send({ error: "User unauthorised" }).end();
+    }
+    return res.status(400).end();
+  }
+
+  try {
+    const connection = await mysql.createConnection(MYSQL_CONFIG);
+    const [result] = await connection.execute(
+      `SELECT * FROM ${MYSQL_CONFIG.database}.bills WHERE group_id = ${groupId}`
+      // `SELECT users.full_name, bills.id AS "bill_id", bills.description, bills.amount  ,${MYSQL_CONFIG.database}.groups.name
+      // FROM (${MYSQL_CONFIG.database}.groups INNER JOIN bills ON ${MYSQL_CONFIG.database}.groups.id = bills.group_id) INNER JOIN users ON bills.user_id = users.id
+      // WHERE ${MYSQL_CONFIG.database}.groups.id= ${groupId} ORDER BY bills.id;`
+    );
+    await connection.end();
+
+    return res.status(200).send(result).end();
+  } catch (error) {
+    res.status(500).send(error).end();
+    return console.error(error);
+  }
+};
+
+export const postBill = async (req, res) => {
+  const token = req.headers.authorization?.split(" ")[1];
+  const groupId = +req.body.groupId;
+  const amount = +req.body.amount;
+  const description = req.body.description;
+  let payload = null;
+
+  if (!token) {
+    return res.status(401).send({ error: "User unauthorised" }).end();
+  }
+
+  try {
+    payload = jwt.verify(token, jwtSecret);
+  } catch (err) {
+    if (err instanceof jwt.JsonWebTokenError) {
+      return res.status(401).send({ error: "User unauthorised" }).end();
+    }
+    return res.status(400).end();
+  }
+
+  const sendBadReqResponse = (message) => {
+    res
+      .status(400)
+      .send({
+        error: message,
+      })
+      .end();
+  };
+
+  if (!groupId && !amount && !description) {
+    return sendBadReqResponse("Please provide group data.");
+  }
+
+  const cleanGroupId = mysql.escape(groupId).replaceAll("'", "");
+  const cleanAmmount = mysql.escape(amount).replaceAll("'", "");
+  const cleanDescription = mysql.escape(description).replaceAll("'", "");
+
+  if (groupId < 0 || Number.isNaN(groupId) || typeof groupId !== "number") {
+    return sendBadReqResponse("Incorrect group ID provided: ${groupId}.");
+  }
+
+  try {
+    const connection = await mysql.createConnection(MYSQL_CONFIG);
+
+    const query = `INSERT INTO ${MYSQL_CONFIG.database}.bills (group_id, amount, description) VALUES('${cleanGroupId}', '${cleanAmmount}', '${cleanDescription}')`;
+
+    await connection.execute(query);
+
+    await connection.end();
+
+    res
+      .status(201)
+      .send({ message: `Bill ${cleanDescription} was added` })
+      .end();
+  } catch (error) {
+    res.status(500).send(error).end();
+
+    return console.error(error);
+  }
+};
