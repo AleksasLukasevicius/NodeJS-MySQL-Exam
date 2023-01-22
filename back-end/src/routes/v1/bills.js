@@ -34,15 +34,12 @@ export const getGroupBills = async (req, res) => {
 
   try {
     const connection = await mysql.createConnection(MYSQL_CONFIG);
-    const [result] = await connection.execute(
+    const [bills] = await connection.execute(
       `SELECT * FROM ${MYSQL_CONFIG.database}.bills WHERE group_id = ${groupId}`
-      // `SELECT users.full_name, bills.id AS "bill_id", bills.description, bills.amount  ,${MYSQL_CONFIG.database}.groups.name
-      // FROM (${MYSQL_CONFIG.database}.groups INNER JOIN bills ON ${MYSQL_CONFIG.database}.groups.id = bills.group_id) INNER JOIN users ON bills.user_id = users.id
-      // WHERE ${MYSQL_CONFIG.database}.groups.id= ${groupId} ORDER BY bills.id;`
     );
     await connection.end();
 
-    return res.status(200).send(result).end();
+    return res.status(200).send(bills).end();
   } catch (error) {
     res.status(500).send(error).end();
     return console.error(error);
