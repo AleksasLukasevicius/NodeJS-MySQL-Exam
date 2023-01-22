@@ -25,19 +25,14 @@ const renderUserGroups = async () => {
     const { group_id, name } = group;
 
     const contentContainer = document.createElement("div");
-
-    const idElement = document.createElement("a");
-
+    const idElement = document.createElement("p");
     const nameElement = document.createElement("h4");
 
     contentContainer.className = "contentContainer";
-    idElement.textContent = `Group id number ${group_id}`;
+    idElement.textContent = `Group number ${group_id}`;
     nameElement.textContent = name;
 
-    contentContainer.append(idElement, nameElement);
-    sectionContainer.append(contentContainer);
-
-    idElement.addEventListener("click", () => {
+    contentContainer.addEventListener("click", () => {
       const route = location.pathname;
       const redirectRoute = route.replace(
         "user-groups.html",
@@ -45,6 +40,9 @@ const renderUserGroups = async () => {
       );
       location.assign(redirectRoute);
     });
+
+    contentContainer.append(idElement, nameElement);
+    sectionContainer.append(contentContainer);
   });
 };
 
