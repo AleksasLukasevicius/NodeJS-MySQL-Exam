@@ -43,16 +43,44 @@
         </div>
 
         <nav>
+          <a href="./index.html">Goups</a>
           <a href="./login.html">Login</a>
           <a href="./register.html">Register</a>
+          <a href="./user-groups.html">User groups</a>
         </nav>
       </div>
     </header>
 
     <main>
       <div class="container">
-        <h1 class="title">Please login or register</h1>
+        <h1 class="title">All groups:</h1>
+        <section id="content"></section>
+      </div>
+
+      <div class="container">
+        <h1 class="title">New group name:</h1>
+
+        <form id="group-form">
+          <div class="control">
+            <label for="name-input">Enter name</label>
+            <input
+              name="name-input"
+              id="name-input"
+              placeholder="New group name"
+              required
+            />
+          </div>
+
+          <div class="control">
+            <button class="btn" type="submit">Add Group</button>
+          </div>
+        </form>
+
+        <section id="content"></section>
       </div>
     </main>
+
+    <script type="module" src="./modules/renderGroups.js"></script>
+    <script type="module" src="./modules/addGroupName.js"></script>
   </body>
 </html>
