@@ -16,11 +16,10 @@ const renderContent = async () => {
 
   if (!userGroups.length) {
     const noDataElemnet = document.createElement("h2");
-    noDataElemnet.textContent = "There is no user roups assigned to you";
+    noDataElemnet.textContent = "There is no groups assigned to you";
 
     sectionContainer.append(noDataElemnet);
   }
-  console.info(userGroups);
 
   userGroups.forEach((group) => {
     const { group_id, name } = group;

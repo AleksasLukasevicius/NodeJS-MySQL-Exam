@@ -10,13 +10,12 @@ export const getUserAccounts = async (req, res) => {
 
   try {
     const connection = await mysql.createConnection(MYSQL_CONFIG);
-    const [result] = await connection.execute(
+    const [userAccounts] = await connection.execute(
       `SELECT ${MYSQL_CONFIG.database}.groups.id AS group_id, ${MYSQL_CONFIG.database}.groups.name FROM ${MYSQL_CONFIG.database}.accounts INNER JOIN ${MYSQL_CONFIG.database}.groups ON accounts.group_id = ${MYSQL_CONFIG.database}.groups.id WHERE ${MYSQL_CONFIG.database}.accounts.user_id = ${user_id};`
     );
-    console.info(result);
     await connection.end();
 
-    return res.status(200).send(result).end();
+    return res.status(200).send(userAccounts).end();
   } catch (error) {
     res.status(500).send(error).end();
     return console.error(error);

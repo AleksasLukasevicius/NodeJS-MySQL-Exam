@@ -10,13 +10,11 @@ const getGroups = async () => {
       return window.location.assign(`./login.html`);
     }
 
-    if (response.ok) {
-      console.info(groups);
-
-      return groups;
-    }
+    return groups;
   } catch (error) {
     console.log(error);
+
+    alert(error.message);
   }
 };
 

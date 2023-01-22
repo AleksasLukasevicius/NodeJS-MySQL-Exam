@@ -4,7 +4,7 @@
     <meta charset="UTF-8" />
     <meta http-equiv="X-UA-Compatible" content="IE=edge" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>User Tutorials</title>
+    <title>User groups</title>
     <link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png" />
     <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png" />
     <link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png" />
@@ -53,12 +53,35 @@
 
     <main>
       <div class="container">
-        <h1 class="title">User Groups:</h1>
+        <h1 class="title">Select Your Group:</h1>
+
+        <section id="content"></section>
+      </div>
+
+      <div class="container">
+        <h1 class="title">Add Group:</h1>
+
+        <form id="groupId-form">
+          <div class="control">
+            <label for="groupId-input">Group id</label>
+            <input
+              name="groupId-input"
+              id="groupId-input"
+              placeholder="Group Id number"
+              required
+            />
+          </div>
+
+          <div class="control">
+            <button class="btn" type="submit">Add Group id</button>
+          </div>
+        </form>
 
         <section id="content"></section>
       </div>
     </main>
 
     <script type="module" src="./modules/renderUserGroups.js"></script>
+    <script type="module" src="./modules/addGroupId.js"></script>
   </body>
 </html>

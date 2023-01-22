@@ -14,6 +14,8 @@ const getUserGroups = async () => {
     return userGroups;
   } catch (error) {
     console.log(error);
+
+    alert(error.message);
   }
 };
 

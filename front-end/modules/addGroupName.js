@@ -15,7 +15,7 @@ groupNameForm.addEventListener("submit", async (event) => {
         authorization: `Bearer ${localStorage.getItem("token")}`,
       },
       body: JSON.stringify({
-        group: groupNameInputValue,
+        name: groupNameInputValue,
       }),
     });
 
@@ -24,13 +24,13 @@ groupNameForm.addEventListener("submit", async (event) => {
 
       alert("Group added successfuly");
 
-      window.location.assign(`./user-groups.html`);
+      window.location.assign(`./index.html`);
     }
 
     if (!response.ok || response.status >= 400) {
       const data = await response.json();
 
-      return alert(data.error || data.statusText);
+      return alert(data.error || response.statusText);
     }
   } catch (error) {
     console.log(error);
