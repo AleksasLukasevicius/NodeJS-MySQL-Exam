@@ -24,21 +24,19 @@ billForm.addEventListener("submit", async (event) => {
       }),
     });
 
+    const data = await response.json();
+
     console.info({ response });
 
-    if (response.ok) {
-      billForm.reset();
-
-      alert("Bill added successfuly");
-
-      window.location.reload();
-    }
-
     if (!response.ok || response.status >= 400) {
-      const data = await response.json();
-
       return alert(data.error || response.statusText);
     }
+
+    billForm.reset();
+
+    alert("Bill added successfuly");
+
+    window.location.reload();
   } catch (error) {
     alert(error.message);
 

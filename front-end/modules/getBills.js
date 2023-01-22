@@ -1,5 +1,5 @@
 const urlParams = new URLSearchParams(window.location.search);
-const group_id = +urlParams.get("group_id");
+const group_id = urlParams.get("group_id");
 
 const getBills = async () => {
   try {
@@ -9,7 +9,7 @@ const getBills = async () => {
     const bills = await response.json();
 
     if (!response.ok || response.status >= 400) {
-      return alert(bills.error || bills.statusText);
+      return alert(bills.error || response.statusText);
     }
 
     return bills;
