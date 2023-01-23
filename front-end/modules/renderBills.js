@@ -1,8 +1,8 @@
 import { getBills } from "./getBills.js";
 
-const renderBills = async () => {
-  const bills = await getBills();
+const bills = await getBills();
 
+export const renderBills = async () => {
   if (!bills) {
     return;
   }
@@ -25,18 +25,15 @@ const renderBills = async () => {
   const billsTableElement = document.createElement("table");
   const tbodyElement = document.createElement("tbody");
   const tableRowElement = document.createElement("tr");
-  const thIdElement = document.createElement("th");
-  const thDescriptionElement = document.createElement("th");
-  const thAmountElement = document.createElement("th");
+  const idElement = document.createElement("th");
+  const descriptionElement = document.createElement("th");
+  const amountElement = document.createElement("th");
 
-  billsContainer.id = "bills-container";
-  billsTableElement.id = "bills-table";
-  tbodyElement.id = "tbody";
-  thIdElement.textContent = "Id";
-  thDescriptionElement.textContent = "Description";
-  thAmountElement.textContent = "Amount";
+  idElement.textContent = "Id";
+  descriptionElement.textContent = "Description";
+  amountElement.textContent = "Amount";
 
-  tableRowElement.append(thIdElement, thDescriptionElement, thAmountElement);
+  tableRowElement.append(idElement, descriptionElement, amountElement);
   tbodyElement.append(tableRowElement);
   billsTableElement.append(tbodyElement);
   billsContainer.append(billsTableElement);
