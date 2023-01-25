@@ -1,10 +1,12 @@
-const billForm = document.querySelector("form#addBill-form");
+const urlParams = new URLSearchParams(window.location.search);
+const group_id = +urlParams.get("group_id");
 
-billForm.addEventListener("submit", async (event) => {
-  event.preventDefault();
+const addBill = async () => {
+  const billForm = document.querySelector("form#addBill-form");
 
-  const urlParams = new URLSearchParams(window.location.search);
-  const group_id = +urlParams.get("group_id");
+  // billForm.addEventListener("submit", async (event) => {
+  //   event.preventDefault();
+
   const descriptionValue = document
     .querySelector("#description-input")
     .value.trim();
@@ -23,10 +25,11 @@ billForm.addEventListener("submit", async (event) => {
         amount: amountValue,
       }),
     });
+    console.info({ response });
 
     const data = await response.json();
 
-    console.info({ response });
+    console.info({ data });
 
     if (!response.ok || response.status >= 400) {
       return alert(data.error || response.statusText);
@@ -42,4 +45,7 @@ billForm.addEventListener("submit", async (event) => {
 
     console.log(error);
   }
-});
+  // });
+};
+
+export { addBill };

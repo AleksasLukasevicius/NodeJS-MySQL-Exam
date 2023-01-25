@@ -1,8 +1,9 @@
 import { getBills } from "./getBills.js";
-
-const bills = await getBills();
+import { addBill } from "./addBill.js";
 
 export const renderBills = async () => {
+  const bills = await getBills();
+
   if (!bills) {
     return;
   }
@@ -16,9 +17,10 @@ export const renderBills = async () => {
 
   if (!bills.length) {
     const noDataElement = document.createElement("h2");
+
     noDataElement.textContent = "No data in database";
 
-    sectionContainer.append(noDataElement);
+    return sectionContainer.append(noDataElement);
   }
 
   const billsContainer = document.createElement("div");
@@ -57,3 +59,11 @@ export const renderBills = async () => {
 };
 
 await renderBills();
+
+document
+  .querySelector("form#addBill-form")
+  .addEventListener("submit", async (event) => {
+    event.preventDefault();
+
+    await addBill();
+  });

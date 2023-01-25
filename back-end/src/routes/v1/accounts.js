@@ -1,5 +1,6 @@
 import mysql from "mysql2/promise";
 import jwt from "jsonwebtoken";
+import Joi from "joi";
 import { MYSQL_CONFIG } from "../../config.js";
 import { jwtSecret } from "../../config.js";
 
@@ -22,25 +23,20 @@ export const getUserAccounts = async (req, res) => {
   }
 };
 
+const accountSchema = Joi.object({
+  group_id: Joi.number().integer().required(),
+});
+
 export const addAccount = async (req, res) => {
   const token = req.headers.authorization?.split(" ")[1];
   const decryptedToken = jwt.verify(token, jwtSecret);
   const user_id = decryptedToken.id;
-  const { group_id } = req.body;
-
-  let payload = null;
-
-  if (!token) {
-    return res.status(401).send({ error: "User unauthorised" }).end();
-  }
+  let accountData = req.body;
 
   try {
-    payload = jwt.verify(token, jwtSecret);
-  } catch (err) {
-    if (err instanceof jwt.JsonWebTokenError) {
-      return res.status(401).send({ error: "User unauthorised" }).end();
-    }
-    return res.status(400).end();
+    accountData = await accountSchema.validateAsync(accountData);
+  } catch (error) {
+    return res.status(400).send({ error: error.message }).end();
   }
 
   const sendBadReqResponse = (message) => {
@@ -52,33 +48,24 @@ export const addAccount = async (req, res) => {
       .end();
   };
 
-  if (!group_id) {
-    return sendBadReqResponse("Please input group name.");
-  }
-
   if (!user_id) {
     return sendBadReqResponse(`${user_id} is not provided`);
   }
 
-  const cleanGroupId = +mysql.escape(req.body?.group_id);
   const cleanUserId = +mysql.escape(user_id);
 
   if (
-    typeof cleanGroupId !== "number" ??
-    Number.isNaN(cleanGroupId ?? cleanGroupId < 0)
-  ) {
-    return sendBadReqResponse("Please input group Id as a number.");
-  }
-
-  if (
-    typeof cleanUserId !== "number" ??
-    Number.isNaN(cleanUserId ?? cleanUserId < 0)
+    typeof cleanUserId !== "number" ||
+    Number.isNaN(cleanUserId || cleanUserId < 0)
   ) {
     return sendBadReqResponse("Please input user Id as a number.");
   }
 
-  const userExistsInGroup = `SELECT * FROM ${MYSQL_CONFIG.database}.accounts WHERE group_id = ${cleanGroupId} AND user_id = ${user_id}`;
-  const query = `INSERT INTO ${MYSQL_CONFIG.database}.accounts (group_id, user_id) VALUES (${cleanGroupId}, ${cleanUserId})`;
+  const userExistsInGroup = `SELECT * FROM ${MYSQL_CONFIG.database}.accounts 
+  WHERE group_id = ${accountData.group_id} 
+  AND user_id = ${user_id}`;
+  const query = `INSERT INTO ${MYSQL_CONFIG.database}.accounts (group_id, user_id) 
+  VALUES (${accountData.group_id}, ${cleanUserId})`;
 
   try {
     const connection = await mysql.createConnection(MYSQL_CONFIG);
@@ -86,7 +73,7 @@ export const addAccount = async (req, res) => {
 
     if (isUserInGroup.length && Array.isArray(isUserInGroup)) {
       return sendBadReqResponse(
-        `User ${cleanUserId} is already in account number: ${cleanGroupId}.`
+        `User ${cleanUserId} is already in account number: ${accountData.group_id}.`
       );
     }
 
@@ -96,7 +83,7 @@ export const addAccount = async (req, res) => {
 
     res
       .status(200)
-      .send({ message: `User added to account ${cleanGroupId}.` })
+      .send({ message: `User added to account ${accountData.group_id}.` })
       .end();
   } catch (error) {
     res.status(500).send(error).end();
