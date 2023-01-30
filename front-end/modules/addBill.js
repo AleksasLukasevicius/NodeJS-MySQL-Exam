@@ -4,7 +4,7 @@ billForm.addEventListener("submit", async (event) => {
   event.preventDefault();
 
   const urlParams = new URLSearchParams(window.location.search);
-  const groupId = +urlParams.get("group_id");
+  const group_id = +urlParams.get("group_id");
   const descriptionValue = document
     .querySelector("#description-input")
     .value.trim();
@@ -23,8 +23,11 @@ billForm.addEventListener("submit", async (event) => {
         amount: amountValue,
       }),
     });
+    console.info({ response });
 
     const data = await response.json();
+
+    console.info({ response });
 
     if (!response.ok || response.status >= 400) {
       return alert(data.error || response.statusText);
@@ -40,4 +43,7 @@ billForm.addEventListener("submit", async (event) => {
 
     console.log(error);
   }
-});
+  // });
+};
+
+export { addBill };
