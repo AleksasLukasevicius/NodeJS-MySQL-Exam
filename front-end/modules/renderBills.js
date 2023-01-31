@@ -3,11 +3,7 @@ import { getBills } from "./getBills.js";
 const renderBills = async () => {
   const bills = await getBills();
 
-  if (!bills) {
-    return;
-  }
-
-  if (bills.error) {
+  if (!bills || bills.error) {
     return;
   }
 

@@ -3,11 +3,7 @@ import { getUserGroups } from "./getUserGroups.js";
 const renderUserGroups = async () => {
   const userGroups = await getUserGroups();
 
-  if (!userGroups) {
-    return;
-  }
-
-  if (userGroups.error) {
+  if (!userGroups || userGroups.error) {
     return;
   }
 
@@ -33,12 +29,7 @@ const renderUserGroups = async () => {
     nameElement.textContent = name;
 
     contentContainer.addEventListener("click", () => {
-      const route = location.pathname;
-      const redirectRoute = route.replace(
-        "user-groups.html",
-        `bills.html?group_id=${group_id}`
-      );
-      location.assign(redirectRoute);
+      window.location.assign(`./bills.html?group_id=${group_id}`);
     });
 
     contentContainer.append(idElement, nameElement);

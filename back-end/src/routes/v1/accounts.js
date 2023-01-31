@@ -6,12 +6,17 @@ import { jwtSecret } from "../../config.js";
 export const getUserAccounts = async (req, res) => {
   const token = req.headers.authorization?.split(" ")[1];
   const decryptedToken = jwt.verify(token, jwtSecret);
-  const user_id = decryptedToken.id;
+  const userId = decryptedToken.id;
 
   try {
     const connection = await mysql.createConnection(MYSQL_CONFIG);
     const [userAccounts] = await connection.execute(
-      `SELECT ${MYSQL_CONFIG.database}.groups.id AS group_id, ${MYSQL_CONFIG.database}.groups.name FROM ${MYSQL_CONFIG.database}.accounts INNER JOIN ${MYSQL_CONFIG.database}.groups ON accounts.group_id = ${MYSQL_CONFIG.database}.groups.id WHERE ${MYSQL_CONFIG.database}.accounts.user_id = ${user_id};`
+      `SELECT ${MYSQL_CONFIG.database}.groups.id 
+      AS group_id, ${MYSQL_CONFIG.database}.groups.name 
+      FROM ${MYSQL_CONFIG.database}.accounts 
+      INNER JOIN ${MYSQL_CONFIG.database}.groups 
+      ON accounts.group_id = ${MYSQL_CONFIG.database}.groups.id 
+      WHERE ${MYSQL_CONFIG.database}.accounts.user_id = ${userId};`
     );
     await connection.end();
 
@@ -77,8 +82,11 @@ export const addAccount = async (req, res) => {
     return sendBadReqResponse("Please input user Id as a number.");
   }
 
-  const userExistsInGroup = `SELECT * FROM ${MYSQL_CONFIG.database}.accounts WHERE group_id = ${cleanGroupId} AND user_id = ${user_id}`;
-  const query = `INSERT INTO ${MYSQL_CONFIG.database}.accounts (group_id, user_id) VALUES (${cleanGroupId}, ${cleanUserId})`;
+  const userExistsInGroup = `SELECT * FROM ${MYSQL_CONFIG.database}.accounts 
+  WHERE group_id = ${cleanGroupId} 
+  AND user_id = ${user_id}`;
+  const query = `INSERT INTO ${MYSQL_CONFIG.database}.accounts (group_id, user_id) 
+  VALUES (${cleanGroupId}, ${cleanUserId})`;
 
   try {
     const connection = await mysql.createConnection(MYSQL_CONFIG);

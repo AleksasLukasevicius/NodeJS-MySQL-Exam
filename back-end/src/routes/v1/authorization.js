@@ -26,9 +26,10 @@ export const registerUser = async (req, res) => {
 
     const connection = await mysql.createConnection(MYSQL_CONFIG);
     await connection.execute(
-      `INSERT INTO users (full_name, email, password) VALUES (${mysql.escape(
-        userData.fullName
-      )},${mysql.escape(userData.email)}, '${hashedPassword}')`
+      `INSERT INTO users (full_name, email, password) 
+      VALUES (${mysql.escape(userData.fullName)}, 
+      ${mysql.escape(userData.email)}, 
+      '${hashedPassword}')`
     );
 
     await connection.end();
@@ -50,7 +51,7 @@ export const loginUser = async (req, res) => {
   try {
     userData = await userLoginSchema.validateAsync(userData);
   } catch (error) {
-    return res.status(400).send({ error: "Incorrect  or password" }).end();
+    return res.status(400).send({ error: "Incorrect email or password" }).end();
   }
 
   try {
