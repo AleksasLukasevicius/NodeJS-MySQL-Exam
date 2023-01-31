@@ -1,6 +1,7 @@
 import { getBills } from "./getBills.js";
+import { addBill } from "./addBill.js";
 
-const renderBills = async () => {
+export const renderBills = async () => {
   const bills = await getBills();
 
   if (!bills || bills.error) {
@@ -12,27 +13,25 @@ const renderBills = async () => {
 
   if (!bills.length) {
     const noDataElement = document.createElement("h2");
+
     noDataElement.textContent = "No data in database";
 
-    sectionContainer.append(noDataElement);
+    return sectionContainer.append(noDataElement);
   }
 
   const billsContainer = document.createElement("div");
   const billsTableElement = document.createElement("table");
   const tbodyElement = document.createElement("tbody");
   const tableRowElement = document.createElement("tr");
-  const thIdElement = document.createElement("th");
-  const thDescriptionElement = document.createElement("th");
-  const thAmountElement = document.createElement("th");
+  const idElement = document.createElement("th");
+  const descriptionElement = document.createElement("th");
+  const amountElement = document.createElement("th");
 
-  billsContainer.id = "bills-container";
-  billsTableElement.id = "bills-table";
-  tbodyElement.id = "tbody";
-  thIdElement.textContent = "Id";
-  thDescriptionElement.textContent = "Description";
-  thAmountElement.textContent = "Amount";
+  idElement.textContent = "Id";
+  descriptionElement.textContent = "Description";
+  amountElement.textContent = "Amount";
 
-  tableRowElement.append(thIdElement, thDescriptionElement, thAmountElement);
+  tableRowElement.append(idElement, descriptionElement, amountElement);
   tbodyElement.append(tableRowElement);
   billsTableElement.append(tbodyElement);
   billsContainer.append(billsTableElement);
@@ -56,3 +55,11 @@ const renderBills = async () => {
 };
 
 await renderBills();
+
+document
+  .querySelector("form#addBill-form")
+  .addEventListener("submit", async (event) => {
+    event.preventDefault();
+
+    await addBill();
+  });

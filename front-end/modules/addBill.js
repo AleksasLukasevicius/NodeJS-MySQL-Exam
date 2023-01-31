@@ -23,6 +23,7 @@ billForm.addEventListener("submit", async (event) => {
         amount: amountValue,
       }),
     });
+    console.info({ response });
 
     const data = await response.json();
 
@@ -40,4 +41,7 @@ billForm.addEventListener("submit", async (event) => {
 
     console.log(error);
   }
-});
+  // });
+};
+
+export { addBill };
