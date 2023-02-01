@@ -57,7 +57,7 @@ export const addAccount = async (req, res) => {
     return sendBadReqResponse(`${user_id} is not provided`);
   }
 
-  const cleanUserId = +mysql.escape(user_id);
+  const cleanUserId = mysql.escape(user_id);
 
   if (
     typeof cleanUserId !== "number" ||
@@ -67,17 +67,10 @@ export const addAccount = async (req, res) => {
   }
 
   const userExistsInGroup = `SELECT * FROM ${MYSQL_CONFIG.database}.accounts 
-<<<<<<< HEAD
-  WHERE group_id = ${cleanGroupId} 
-  AND user_id = ${user_id}`;
-  const query = `INSERT INTO ${MYSQL_CONFIG.database}.accounts (group_id, user_id) 
-  VALUES (${cleanGroupId}, ${cleanUserId})`;
-=======
   WHERE group_id = ${accountData.group_id} 
   AND user_id = ${user_id}`;
   const query = `INSERT INTO ${MYSQL_CONFIG.database}.accounts (group_id, user_id) 
   VALUES (${accountData.group_id}, ${cleanUserId})`;
->>>>>>> 763ec601aae8abbdc0b7b377250dc3dcd65f99fd
 
   try {
     const connection = await mysql.createConnection(MYSQL_CONFIG);

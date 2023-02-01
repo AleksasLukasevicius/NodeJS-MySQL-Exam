@@ -1,5 +1,5 @@
 import { getBills } from "./getBills.js";
-import { addBill } from "./addBill.js";
+// import { addBill } from "./addBill.js";
 
 export const renderBills = async () => {
   const bills = await getBills();
@@ -56,10 +56,10 @@ export const renderBills = async () => {
 
 await renderBills();
 
-document
-  .querySelector("form#addBill-form")
-  .addEventListener("submit", async (event) => {
-    event.preventDefault();
+// document
+//   .querySelector("form#addBill-form")
+//   .addEventListener("submit", async (event) => {
+//     event.preventDefault();
 
-    await addBill();
-  });
+//     await addBill();
+//   });

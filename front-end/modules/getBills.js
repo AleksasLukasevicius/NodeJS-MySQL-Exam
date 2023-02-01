@@ -1,19 +1,18 @@
 const urlParams = new URLSearchParams(window.location.search);
-const group_id = urlParams.get("group_id");
+const groupId = urlParams.get("group_id");
 
-const getBills = async () => {
+console.info(groupId);
+
+export const getBills = async () => {
   try {
-    const response = await fetch(`http://localhost:5000/bills/${group_id}`, {
+    const response = await fetch(`http://localhost:5000/bills/${groupId}`, {
       headers: { authorization: `Bearer ${localStorage.getItem("token")}` },
     });
+
     const bills = await response.json();
+    console.info(bills);
 
     if (!response.ok || response.status >= 400) {
-      if (bills.error === "User unauthorised") {
-        alert(bills.error);
-
-        return window.location.assign(`./login.html`);
-      }
       alert(bills.error || response.statusText);
 
       return window.location.assign(`./login.html`);
@@ -26,5 +25,3 @@ const getBills = async () => {
     alert(error.message);
   }
 };
-
-export { getBills };
