@@ -57,7 +57,7 @@ export const addAccount = async (req, res) => {
     return sendBadReqResponse(`${user_id} is not provided`);
   }
 
-  const cleanUserId = mysql.escape(user_id);
+  const cleanUserId = +mysql.escape(user_id);
 
   if (
     typeof cleanUserId !== "number" ||
