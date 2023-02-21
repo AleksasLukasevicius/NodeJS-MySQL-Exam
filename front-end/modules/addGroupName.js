@@ -19,19 +19,17 @@ groupNameForm.addEventListener("submit", async (event) => {
       }),
     });
 
-    if (response.ok) {
-      groupNameForm.reset();
-
-      alert("Group added successfuly");
-
-      window.location.assign(`./index.html`);
-    }
-
     if (!response.ok || response.status >= 400) {
       const data = await response.json();
 
       return alert(data.error || response.statusText);
     }
+
+    groupNameForm.reset();
+
+    alert("Group added successfuly");
+
+    window.location.assign(`./user-groups.html`);
   } catch (error) {
     console.log(error);
   }

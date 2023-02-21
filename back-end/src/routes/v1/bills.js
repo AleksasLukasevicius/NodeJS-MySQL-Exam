@@ -5,7 +5,7 @@ import { jwtSecret } from "../../config.js";
 
 export const getGroupBills = async (req, res) => {
   const token = req.headers.authorization?.split(" ")[1];
-  const groupId = +req.params.group_id;
+  const groupId = mysql.escape(req.params?.group_id);
   let payload = null;
 
   if (!groupId) {
@@ -35,6 +35,7 @@ export const getGroupBills = async (req, res) => {
     const [bills] = await connection.execute(
       `SELECT * FROM ${MYSQL_CONFIG.database}.bills WHERE group_id = ${groupId}`
     );
+
     await connection.end();
 
     return res.status(200).send(bills).end();

@@ -3,11 +3,7 @@ import { getUserGroups } from "./getUserGroups.js";
 const renderUserGroups = async () => {
   const userGroups = await getUserGroups();
 
-  if (!userGroups) {
-    return;
-  }
-
-  if (userGroups.error) {
+  if (!userGroups || userGroups.error) {
     return;
   }
 
