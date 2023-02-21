@@ -1,8 +1,7 @@
 import { getBills } from "./getBills.js";
 
-const bills = await getBills();
-
 export const renderBills = async () => {
+  const bills = await getBills();
   if (!bills) {
     return;
   }
